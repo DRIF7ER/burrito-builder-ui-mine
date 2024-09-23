@@ -1,10 +1,12 @@
 import React from "react";
 import "./Orders.css";
 
-const Orders = (props) => {
-  const orderEls = props.orders.map((order) => {
+export const Orders = (props) => {
+
+  const orderEls = props.orders.map((order, idx) => {
+    // console.log(order, '<-- ORDER IN MAP')
     return (
-      <div className="order">
+      <div className="order" key={ idx }>
         <h3>{order.name}</h3>
         <ul className="ingredient-list">
           {order.ingredients.map((ingredient) => {

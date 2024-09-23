@@ -1,12 +1,21 @@
-import { useState } from "react";
+import { useState, propTypes } from "react";
+import { Orders } from '../Orders/Orders.js'
 
 function OrderForm(props) {
   const [name, setName] = useState("");
   const [ingredients, setIngredients] = useState([]);
 
-  function handleSubmit(e) {
+  function handleIngredients(e) {
     e.preventDefault();
-    clearInputs();
+    setIngredients([...ingredients, e.target.name])
+  };
+
+  function handleSubmit(e, aName, someIngredients) {
+    if(aName === '' && someIngredients.length === 0) {
+      return alert('You must enter a name and at least one ingredient!')
+    } else {}
+    props.addOrder(e, aName, someIngredients);
+    clearInputs()
   }
 
   function clearInputs() {
@@ -33,7 +42,7 @@ function OrderForm(props) {
       <button
         key={ingredient}
         name={ingredient}
-        // onClick={(e) => }
+        onClick={(e) => {handleIngredients(e, name, ingredients)}}
       >
         {ingredient}
       </button>
@@ -47,14 +56,14 @@ function OrderForm(props) {
         placeholder="Name"
         name="name"
         value={name}
-        // onChange={(e) => }
+        onChange={(e) => setName(e.target.value)}
       />
 
       {ingredientButtons}
 
       <p>Order: {ingredients.join(", ") || "Nothing selected"}</p>
 
-      <button onClick={(e) => handleSubmit(e)}>Submit Order</button>
+      <button onClick={(e) => handleSubmit(e, name, ingredients)}>Submit Order</button>
     </form>
   );
 }
